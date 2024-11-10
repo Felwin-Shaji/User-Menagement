@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/style/adminlogin.css"> <!-- Assumes CSS in public folder -->
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <form action="/admin/login" method="POST" onsubmit="return validateForm()">
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="email" id="email" name="email" required>
+                    <small id="emailError" class="error"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+
+                    <small id="passwordError" class="error"></small>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+
+        </div>
+    </div>
+    
+    <script>
+
+        function validateForm(){
+            const username = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            document.getElementById('emailError').innerText="";
+            document.getElementById('passwordError').innerText='';
+
+            let isValid = true;
+            if(username<3){
+                document.getElementById("emailError").innerText="Username must be at least 3 characters";
+                isValid = false
+            }
+
+            if (password.length < 6) {
+                document.getElementById("passwordError").innerText = "Password must be at least 6 characters";
+                isValid = false;
+            }
+
+            return isValid;
+
+        }
+
+         const message = "{{message}}";
+            if (message) {
+                swal(message); 
+            }
+
+    </script>
+    
+    <style>
+        .error {
+            color: red;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="/style/userRerister.css"> <!-- Assumes CSS is served from public directory -->
+    
+
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="register-form">
+            {{!-- <input type="text" id="message" value="{{{message}}}" name="message"> --}}
+            <h2>User Registration</h2>
+            {{!-- <form action="/register/user" method="POST"> --}}
+            <form id="registrationForm" action="/user/register" method="POST" onsubmit="return validateForm()">
+
+                {{!-- <input type="text" id="message" value="{{{message}}}" name="message"> --}}
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <small id="usernameError" class="error"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <small id="emailError" class="error"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <small id="passwordError" class="error"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                    <small id="confirmPasswordError" class="error"></small>
+                </div>
+
+                <button type="submit" class="btn">Register</button>
+
+            </form>
+            <p class="login-link">Already have an account? <a href="/user/login" >Login</a></p>
+        </div>
+    </div>
+
+    <script>
+        
+function validateForm() {
+    // Get form values
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+    // Reset error messages
+    document.getElementById("usernameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+    document.getElementById("confirmPasswordError").innerText = "";
+
+    let isValid = true;
+    // Username validation
+    if (username.length < 3) {
+        document.getElementById("usernameError").innerText = "Username must be at least 3 characters";
+        isValid = false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        document.getElementById("emailError").innerText = "Please enter a valid email address";
+        isValid = false;
+    }
+
+    // Password validation
+    if (password.length < 6) {
+        document.getElementById("passwordError").innerText = "Password must be at least 6 characters";
+        isValid = false;
+    }
+
+    // Confirm password validation
+    if (password !== confirmPassword) {
+        document.getElementById("confirmPasswordError").innerText = "Passwords do not match";
+        isValid = false;
+    }
+
+    return isValid; // Form will submit if `isValid` is true
+}
+
+
+const message = "{{message}}";
+        if (message) {
+            swal(message); // Show the alert with the message
+        }
+
+
+</script>
+
+<style>
+.error {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+</style>
+
+</body>
+</html>
